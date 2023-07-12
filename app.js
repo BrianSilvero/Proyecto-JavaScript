@@ -13,7 +13,7 @@ if(edad >= 13){
     let producto= prompt("Ingrese el articulo a comprar").toLowerCase();
     let precio = Number(prompt("Ingrese precio de producto"));
     resultado = resultado + precio + iva(precio);
-    ticket = ticket + "\n" + producto + "\t$" + (precio + iva(precio) + "\n ~~~~~~~~~~~~~");
+    ticket = ticket + "\n" + producto + "\t$" + (precio + iva(precio) + "\n -------------");
     rta = prompt ("Quisiera agregar algo mas al carrito? (Escriba 'Esc' para finalizar compra)").toUpperCase();
   } while (rta != "ESC");
 
