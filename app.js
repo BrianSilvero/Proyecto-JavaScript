@@ -88,7 +88,102 @@
 //   }
 // }
 
-const numeros = [ 3, 0]
-const total = numeros.reduce(( x,elemento) => x * 2 + elemento, 0 )
+class Producto{
+    constructor(id, nombre, precio, cantidad){
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
+    }
 
-console.log(total) // 21
+    descripcion(){
+        return  "Id: " + this.id + 
+                "\nProducto: "+ this.nombre+
+                "\nPrecio: "+ this.precio
+    }
+    
+    descripcionParaCarrito(){
+        return  "Id: " + this.id + 
+                "\nProducto: "+ this.nombre+
+                "\nPrecio: "+ this.precio+
+                "Cantidad: "+this.cantidad
+    }
+}
+
+class controladorDeProducto {
+    constructor(){
+        this.listaDeCompra = [];
+    }
+
+    agregar(producto){
+        this.listaDeCompra.push(producto)
+    }
+    
+    buscarProductoPorId (id){
+        this.listaDeCompra.find(producto => producto.id == id)
+    }
+    mostrar(){
+        this.listaDeCompra.forEach( producto => {
+            alert(producto.descripcion())
+        })
+    }
+}   
+
+class Carrito{
+    constructor(){
+        this.listaCarrito= []
+    }
+
+    agregar(producto){
+        this.listaCarrito,push(producto)
+    }
+    
+    mostrar(producto){
+        return this.listaCarrito.forEach(producto => {
+            alert(producto.descripcionParaCarrito())
+        })
+    }
+
+    calcularTotal(precio){
+            let resultado = this.listaCarrito.reduce( (acumulador ,producto) => acumulador + producto.precio * producto.cantidad ,0)
+    }
+}
+
+
+
+const cDP = new controladorDeProducto();
+const carrito = new Carrito();
+
+
+cDP.agregar(new Producto(1, "Gorra", 1800, 1));
+cDP.agregar(new Producto(2, "Remera", 3400, 1));
+cDP.agregar(new Producto(3, "Taza", 1000, 1));
+cDP.agregar(new Producto(4, "Agenda", 2000, 1));
+
+let edad = Number(prompt ("Bienvendio a la tienda de Hunger! \n Que edad tienes?"))
+
+ if(edad >= 13){
+   let resultado = 0;
+   let ticket = "Resumen de la cuenta: \n";
+   let rta = "";
+   function iva(precio){return precio * 0.21
+   }
+
+   do {
+    cDP.mostrar();
+    let opciones = (prompt("Ingrese el numero del articulo a comprar"));
+    let producto = cDP.buscarProductoPorId(opciones)
+    Carrito.agregar(producto);
+    alert("El producto se añadio con exitos!")
+    Carrito.mostrar()
+    //  let precio = Number(prompt("Ingrese precio de producto"));
+    //  resultado = resultado + precio + iva(precio);
+    //  ticket = ticket + "\n" + producto + "\t$" + (precio + iva(precio) + "\n -------------");
+     rta = prompt ("Quisiera agregar algo mas al carrito? (Escriba 'Esc' para finalizar compra)").toUpperCase();
+   } while (rta != "ESC");
+
+   alert(ticket + "\n\nTotal: " + resultado)
+ }
+ else{
+   alert("Lo sentimos no tienes la edad para comprar");
+   }
